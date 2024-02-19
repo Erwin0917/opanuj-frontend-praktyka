@@ -4,31 +4,30 @@ function validator() {
   const button2 = document.getElementById('button2');
   const result = document.getElementById('result');
 
-  button.addEventListener('click', () => {
-    if (input.value) {
-      if (Number.isInteger(input.value)) {
-        if (
-          Number(input.value) > 0 &&
-          Number(input.value) < 100 &&
-          Number(input.value) % 2 === 0
-        ) {
-          result.innerHTML = 'Valid';
-        } else {
-          result.innerHTML = 'Invalid';
-        }
-        result.innerHTML = 'Valid';
-      } else {
-        result.innerHTML = 'Invalid';
-      }
-    } else {
-      result.innerHTML = 'Invalid';
-    }
-  });
+  button.addEventListener('click', onValidMassage);
+  button2.addEventListener('click', clear);
 
-  button2.addEventListener('click', () => {
+  function clear() {
     input.value = '';
     result.innerHTML = '';
-  });
+  }
+
+  function onValidMassage() {
+    if (input.value.trim() === '') {
+      return;
+    }
+    const isValidRange = checkRange(input.value, 0, 100);
+    result.innerHTML =  isNumber(input.value) && isValidRange ? 'Valid' : 'Invalid';
+  }
 }
+
+function isNumber(value){
+  const parsedValue = parseInt(value, 10);
+  return !isNaN(parsedValue)
+}
+function checkRange(value, min, max) {
+  return Number(value) >= min && Number(value) <= max;
+}
+
 
 validator();
